@@ -61,8 +61,10 @@ class InMemoryLocalStorage implements LocalStorage {
   final Map<String, dynamic> _storage = {};
 
   @override
-  FutureOr<R?> read<R>(String key) => _storage[key] as R?;
+  R? read<R>(String key) => _storage[key] as R?;
 
   @override
-  FutureOr<void> write(String key, Object value) => _storage[key] = value;
+  void write(String key, Object value) => _storage[key] = value;
+
+  void clear() => _storage.clear();
 }

@@ -10,22 +10,27 @@ class VeryGoodCoffeeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => LikedCoffeesCubit(),
-      child: MaterialApp(
-        theme: ThemeData(
-          useMaterial3: true,
-          floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            foregroundColor: Colors.white,
-          ),
+    final themeCubit = ThemeCubit();
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => themeCubit),
+        BlocProvider(create: (_) => LikedCoffeesCubit()),
+      ],
+      child: BlocBuilder(
+        bloc: themeCubit,
+        builder: (context, state) => MaterialApp(
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: themeCubit.themeMode,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          initialRoute: AppRoutes.home,
+          routes: {
+            AppRoutes.home: (_) => const HomePage(),
+            AppRoutes.favorites: (_) => const FavoritesPage(),
+          },
         ),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        initialRoute: AppRoutes.home,
-        routes: {
-          AppRoutes.home: (_) => const HomePage(),
-          AppRoutes.favorites: (_) => const FavoritesPage(),
-        },
       ),
     );
   }

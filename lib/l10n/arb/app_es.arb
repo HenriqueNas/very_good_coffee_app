@@ -1,7 +1,11 @@
 {
     "@@locale": "es",
-    "counterAppBarTitle": "Contador",
-    "@counterAppBarTitle": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
+    "appBarTitle": "Very Good Coffee App",
+    "@appBarTitle": {
+        "description": "Texto mostrado en la AppBar de la HomePage"
+    },
+    "favoritesEmptyList": ":( no hay cafés por aquí",
+    "@favoritesEmptyList": {
+        "description": "Texto mostrado cuando la lista de favoritos está vacía"
     }
 }

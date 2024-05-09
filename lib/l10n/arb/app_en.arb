@@ -1,7 +1,11 @@
 {
     "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
+    "appBarTitle": "Very Good Coffee App",
+    "@appBarTitle": {
+        "description": "Text shown in the AppBar of the HomePage"
+    },
+    "favoritesEmptyList": ":( no coffee around here",
+    "@favoritesEmptyList": {
+        "description": "Text shown when the favorites list is empty"
     }
 }

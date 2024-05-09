@@ -16,15 +16,17 @@ void main() {
     });
 
     test(
-        'fromImageUrl creates CoffeeModel instance with extracted ID and default rating',
-        () {
-      final coffee =
-          CoffeeModel.fromImageUrl('https://example.com/coffee/1.jpg');
+      'fromImageUrl creates CoffeeModel instance'
+      ' with extracted ID and default rating',
+      () {
+        final coffee =
+            CoffeeModel.fromImageUrl('https://example.com/coffee/1.jpg');
 
-      expect(coffee.id, '1.jpg');
-      expect(coffee.imageUrl, 'https://example.com/coffee/1.jpg');
-      expect(coffee.rating, CoffeeRating.none);
-    });
+        expect(coffee.id, '1.jpg');
+        expect(coffee.imageUrl, 'https://example.com/coffee/1.jpg');
+        expect(coffee.rating, CoffeeRating.none);
+      },
+    );
 
     test('fromMap creates CoffeeModel instance from map representation', () {
       final coffeeMap = {

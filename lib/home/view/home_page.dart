@@ -36,12 +36,6 @@ class _HomeViewState extends State<HomeView> {
   late HomeCubit cubit;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    cubit = context.read<HomeCubit>();
-  }
-
-  @override
   void initState() {
     super.initState();
 
@@ -49,22 +43,31 @@ class _HomeViewState extends State<HomeView> {
     cubit.loadInitialCoffeeImages();
   }
 
+  void toggleTheme() => context.read<ThemeCubit>().toggleTheme();
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    cubit = context.watch<HomeCubit>();
+    final themeIcon = context.watch<ThemeCubit>().themeIcon;
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(l10n.appBarTitle),
+        leading: IconButton(
+          onPressed: toggleTheme,
+          icon: Icon(themeIcon),
+        ),
         actions: [
           IconButton(
             onPressed: () => Navigator.of(context).pushNamed(
               AppRoutes.favorites,
             ),
+            padding: const EdgeInsets.only(right: 24),
             icon: const Icon(
               Icons.bookmark_added,
-              color: Colors.green,
+              size: 28,
             ),
           ),
         ],
@@ -79,19 +82,17 @@ class _HomeViewState extends State<HomeView> {
 
             return Center(
               key: const Key('home_page:error'),
-              child: Text(l10n.favoritesEmptyList),
+              child: Text(l10n.emptyCoffeeList),
             );
           }
 
-          final coffees = (state as HomeSuccess).coffees;
-
-          if (coffees.isEmpty) {
+          if (cubit.coffeeList.isEmpty) {
             return Center(
               key: const Key('home_page:empty_list'),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(l10n.favoritesEmptyList),
+                  Text(l10n.emptyCoffeeList),
                   const SizedBox(height: 16),
                   ElevatedButton.icon(
                     onPressed: cubit.loadInitialCoffeeImages,
@@ -103,39 +104,31 @@ class _HomeViewState extends State<HomeView> {
             );
           }
 
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Flexible(
-                  flex: 2,
-                  child: CardSwiper(
-                    key: const Key('home_page:card_swiper'),
-                    numberOfCardsDisplayed: 3,
-                    controller: cubit.swiperController,
-                    cardsCount: coffees.length,
-                    onSwipe: cubit.onSwipe,
-                    allowedSwipeDirection:
-                        const AllowedSwipeDirection.symmetric(
-                      horizontal: true,
-                    ),
-                    cardBuilder: (_, index, __, ___) => CoffeeCard(
-                      coffee: coffees[index],
-                    ),
-                  ),
-                ),
-                Flexible(
-                  child: RatingButtons(
-                    onLike: cubit.likeCoffee,
-                    onDislike: cubit.dislikeCoffee,
-                  ),
-                ),
-              ],
+          return CardSwiper(
+            key: const Key('home_page:card_swiper'),
+            numberOfCardsDisplayed: 3,
+            controller: cubit.swiperController,
+            cardsCount: cubit.coffeeList.length,
+            onSwipe: cubit.onSwipe,
+            onUndo: cubit.onUndoSwipe,
+            padding: const EdgeInsets.all(24),
+            allowedSwipeDirection: const AllowedSwipeDirection.symmetric(
+              horizontal: true,
+            ),
+            cardBuilder: (_, index, __, ___) => CoffeeCard(
+              coffee: cubit.coffeeList[index],
             ),
           );
         },
       ),
+      floatingActionButton: cubit.state.isSuccess
+          ? RatingButtons(
+              onLike: cubit.likeCoffee,
+              onDislike: cubit.dislikeCoffee,
+              onUndo: cubit.swiperController.undo,
+            )
+          : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

@@ -35,6 +35,23 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  List<CoffeeModel> get coffeeList {
+    if (state.isSuccess) {
+      final stateCoffees = (state as HomeSuccess).coffees;
+      final likedCoffees = _likedCoffeesCubit.likedCoffees;
+
+      return stateCoffees.map((coffee) {
+        if (likedCoffees.contains(coffee)) {
+          return coffee;
+        } else {
+          return coffee;
+        }
+      }).toList();
+    } else {
+      return [];
+    }
+  }
+
   bool onSwipe(
     int previousIndex,
     int? currentIndex,
@@ -60,6 +77,13 @@ class HomeCubit extends Cubit<HomeState> {
       return true;
     }
   }
+
+  bool onUndoSwipe(
+    int? previousIndex,
+    int currentIndex,
+    CardSwiperDirection direction,
+  ) =>
+      state.isSuccess;
 
   void rateCoffee(CoffeeModel coffee, CoffeeRating newRating) {
     if (!state.isSuccess) return;

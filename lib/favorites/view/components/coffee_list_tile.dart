@@ -9,10 +9,12 @@ class CoffeeListTile extends StatelessWidget {
   });
 
   final CoffeeModel coffee;
-  final VoidCallback onRemoveCoffee;
+  final void Function(CoffeeModel coffee) onRemoveCoffee;
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       height: 100,
       clipBehavior: Clip.antiAlias,
@@ -29,30 +31,44 @@ class CoffeeListTile extends StatelessWidget {
           ),
         ],
       ),
-      child: Stack(
-        alignment: Alignment.centerRight,
-        children: [
-          Expanded(
-            child: Image.network(
-              coffee.imageUrl,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          GestureDetector(
-            onTap: onRemoveCoffee,
-            child: Container(
-              height: double.infinity,
-              color: Colors.grey.shade200,
-              padding: const EdgeInsets.all(12),
-              child: const Icon(
-                Icons.thumb_down_rounded,
-                size: 20,
-                color: Colors.red,
+      // row with image and remove button
+
+      child: SizedBox(
+        height: 100,
+        child: Row(
+          children: [
+            Expanded(
+              child: Image.network(
+                coffee.imageUrl,
+                key: Key('coffee_list_tile:image_${coffee.id}'),
+                fit: BoxFit.cover,
+                loadingBuilder: (_, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const SizedBox.shrink();
+                },
+                errorBuilder: (_, __, ___) => Image.asset(
+                  'assets/images/coffee_placeholder.jpeg',
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-        ],
+            GestureDetector(
+              onTap: () => onRemoveCoffee(coffee),
+              child: Container(
+                height: double.infinity,
+                color: Theme.of(context).colorScheme.inversePrimary,
+                padding: const EdgeInsets.all(12),
+                child: Icon(
+                  Icons.thumb_down_rounded,
+                  size: 20,
+                  color: isDarkMode //
+                      ? Colors.red.shade600
+                      : Colors.red.shade200,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

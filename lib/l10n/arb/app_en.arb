@@ -4,8 +4,24 @@
     "@appBarTitle": {
         "description": "Text shown in the AppBar of the HomePage"
     },
-    "favoritesEmptyList": ":( no coffee around here",
-    "@favoritesEmptyList": {
-        "description": "Text shown when the favorites list is empty"
+    "emptyCoffeeList": ":( no coffee around here",
+    "@emptyCoffeeList": {
+        "description": "Text shown when there are no coffees to display"
+    },
+    "clearFavoritesDialogTitle": "Clear favorites?",
+    "@clearFavoritesDialogTitle": {
+        "description": "Title of the dialog asking the user if they want to clear their favorites"
+    },
+    "clearFavoritesDialogMessage": "Are you sure you want to clear your favorites?",
+    "@clearFavoritesDialogMessage": {
+        "description": "Message of the dialog asking the user if they want to clear their favorites"
+    },
+    "clearFavoritesDialogCancel": "Cancel",
+    "@clearFavoritesDialogCancel": {
+        "description": "Text of the cancel button in the dialog asking the user if they want to clear their favorites"
+    },
+    "clearFavoritesDialogOk": "Ok",
+    "@clearFavoritesDialogOk": {
+        "description": "Text of the ok button in the dialog asking the user if they want to clear their favorites"
     }
 }

@@ -4,8 +4,24 @@
     "@appBarTitle": {
         "description": "Texto mostrado en la AppBar de la HomePage"
     },
-    "favoritesEmptyList": ":( no hay cafés por aquí",
-    "@favoritesEmptyList": {
-        "description": "Texto mostrado cuando la lista de favoritos está vacía"
+    "emptyCoffeeList": ":( no hay cafés por aquí",
+    "@emptyCoffeeList": {
+        "description": "Texto mostrado cuando no hay cafés en la lista"
+    },
+    "clearFavoritesDialogTitle": "¿Limpiar favoritos?",
+    "@clearFavoritesDialogTitle": {
+        "description": "Título del diálogo que pregunta al usuario si quiere limpiar sus favoritos"
+    },
+    "clearFavoritesDialogMessage": "¿Estás seguro de que quieres limpiar tus favoritos?",
+    "@clearFavoritesDialogMessage": {
+        "description": "Mensaje del diálogo que pregunta al usuario si quiere limpiar sus favoritos"
+    },
+    "clearFavoritesDialogCancel": "Cancelar",
+    "@clearFavoritesDialogCancel": {
+        "description": "Texto del botón de cancelar en el diálogo que pregunta al usuario si quiere limpiar sus favoritos"
+    },
+    "clearFavoritesDialogOk": "Ok",
+    "@clearFavoritesDialogOk": {
+        "description": "Texto del botón de ok en el diálogo que pregunta al usuario si quiere limpiar sus favoritos"
     }
 }

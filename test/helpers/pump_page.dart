@@ -4,14 +4,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:very_good_coffee_app/app/app.dart';
 import 'package:very_good_coffee_app/l10n/l10n.dart';
 
-extension PumpApp on WidgetTester {
-  Future<void> pumpApp(Widget widget) {
+extension PumpPage on WidgetTester {
+  Future<void> pumpPage(Widget widget, {LikedCoffeesCubit? likedCoffeesCubit}) {
     return pumpWidget(
-      BlocProvider(
-        create: (_) => LikedCoffeesCubit(),
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => ThemeCubit()),
+          BlocProvider(create: (_) => likedCoffeesCubit ?? LikedCoffeesCubit()),
+        ],
         child: MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
+          theme: lightTheme,
+          darkTheme: darkTheme,
           home: widget,
         ),
       ),

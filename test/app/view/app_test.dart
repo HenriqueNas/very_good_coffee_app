@@ -11,7 +11,7 @@ void main() {
 
   group('VeryGoodCoffeeApp', () {
     testWidgets('renders VeryGoodCoffeeApp', (tester) async {
-      await tester.pumpApp(const VeryGoodCoffeeApp());
+      await tester.pumpPage(const VeryGoodCoffeeApp());
       expect(find.byType(HomePage), findsOneWidget);
     });
   });

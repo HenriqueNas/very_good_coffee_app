@@ -18,7 +18,7 @@ void main() {
     tearDownAll(DependenciesInjector.dispose);
 
     testWidgets('renders HomePage', (tester) async {
-      await tester.pumpApp(const HomePage());
+      await tester.pumpPage(const HomePage());
       expect(find.byType(HomePage), findsOneWidget);
     });
   });
@@ -37,7 +37,7 @@ void main() {
     testWidgets('renders loading state', (tester) async {
       when(() => homeCubit.state).thenReturn(HomeState.loading);
 
-      await tester.pumpApp(
+      await tester.pumpPage(
         BlocProvider.value(
           value: homeCubit,
           child: const HomeView(),
@@ -52,7 +52,7 @@ void main() {
         HomeState.error('error message'),
       );
 
-      await tester.pumpApp(
+      await tester.pumpPage(
         BlocProvider.value(
           value: homeCubit,
           child: const HomeView(),
@@ -82,8 +82,9 @@ void main() {
       ];
 
       when(() => homeCubit.state).thenReturn(HomeState.success(coffees));
+      when(() => homeCubit.coffeeList).thenReturn(coffees);
 
-      await tester.pumpApp(
+      await tester.pumpPage(
         BlocProvider.value(
           value: homeCubit,
           child: const HomeView(),
@@ -96,8 +97,9 @@ void main() {
 
     testWidgets('render error message when no coffees load', (tester) async {
       when(() => homeCubit.state).thenReturn(HomeState.success([]));
+      when(() => homeCubit.coffeeList).thenReturn([]);
 
-      await tester.pumpApp(
+      await tester.pumpPage(
         BlocProvider.value(
           value: homeCubit,
           child: const HomeView(),

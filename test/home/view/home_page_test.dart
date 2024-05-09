@@ -13,7 +13,9 @@ class MockHomeCubit extends MockCubit<HomeState> implements HomeCubit {}
 
 void main() {
   group('HomePage', () {
-    setUpAll(DependenciesInjector.initDependencies);
+    setUpAll(DependenciesInjector.init);
+
+    tearDownAll(DependenciesInjector.dispose);
 
     testWidgets('renders HomePage', (tester) async {
       await tester.pumpApp(const HomePage());
@@ -29,6 +31,8 @@ void main() {
       when(homeCubit.loadInitialCoffeeImages).thenAnswer((_) async {});
       when(() => homeCubit.swiperController).thenReturn(CardSwiperController());
     });
+
+    tearDownAll(DependenciesInjector.dispose);
 
     testWidgets('renders loading state', (tester) async {
       when(() => homeCubit.state).thenReturn(HomeState.loading);

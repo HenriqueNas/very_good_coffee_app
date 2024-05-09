@@ -5,7 +5,9 @@ import 'package:very_good_coffee_app/home/view/home_page.dart';
 import '../../helpers/helpers.dart';
 
 void main() {
-  setUpAll(DependenciesInjector.initDependencies);
+  setUpAll(DependenciesInjector.init);
+
+  tearDownAll(DependenciesInjector.dispose);
 
   group('VeryGoodCoffeeApp', () {
     testWidgets('renders VeryGoodCoffeeApp', (tester) async {

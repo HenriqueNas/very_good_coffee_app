@@ -7,9 +7,11 @@ void main() {
   late final CoffeeRepository coffeeRepository;
 
   setUpAll(() {
-    DependenciesInjector.initDependencies();
+    DependenciesInjector.init();
     coffeeRepository = CoffeeRepository();
   });
+
+  tearDownAll(DependenciesInjector.dispose);
 
   group('CoffeeRepository', () {
     test('getListOfCoffeeImages returns list of image URLs', () async {

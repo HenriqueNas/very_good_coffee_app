@@ -9,7 +9,9 @@ import '../../helpers/helpers.dart';
 void main() {
   late HomeCubit homeCubit;
 
-  setUpAll(DependenciesInjector.initDependencies);
+  setUpAll(DependenciesInjector.init);
+
+  tearDownAll(DependenciesInjector.dispose);
 
   setUp(() {
     homeCubit = HomeCubit(

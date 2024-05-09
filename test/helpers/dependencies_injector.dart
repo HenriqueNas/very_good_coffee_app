@@ -3,10 +3,18 @@ import 'dart:async';
 import 'package:very_good_coffee_app/app/app.dart';
 
 abstract class DependenciesInjector {
-  static void initDependencies() {
-    Dependencies.instance
-      ..registerFactory<HttpClient>(() => httpClient)
-      ..registerSingleton<LocalStorage>(localStorage);
+  static void init() {
+    if (!Dependencies.instance.isRegistered<HttpClient>()) {
+      Dependencies.instance.registerFactory<HttpClient>(() => httpClient);
+    }
+
+    if (!Dependencies.instance.isRegistered<LocalStorage>()) {
+      Dependencies.instance.registerSingleton<LocalStorage>(localStorage);
+    }
+  }
+
+  static void dispose() {
+    Dependencies.instance.reset();
   }
 
   static const httpClient = MockHttpClient();
